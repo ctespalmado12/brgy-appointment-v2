@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  /* Base */
+  --bg: #fff7ed;            /* orange-50 */
+  --panel: #ffffff;         /* card/bg surface */
+  --text: #0f172a;          /* slate-900 */
+  --muted: #475569;         /* slate-600 */
+
+  /* Brand */
+  --brand: #f97316;         /* orange-500 */
+  --brand-ink: #ea580c;     /* orange-600 */
+  --accent: #f59e0b;        /* amber-500 */
+
+  /* Effects */
+  --ring: 0 0 0 3px rgba(249, 115, 22, .35); /* focus ring from brand */
+}
+
+/* Dark mode */
+:root.dark {
+  --bg: #0b1220;            /* deep slate/navy */
+  --panel: #0f172a;         /* slate-900 */
+  --text: #e2e8f0;          /* slate-200 */
+  --muted: #94a3b8;         /* slate-400 */
+
+  --brand: #f97316;         /* keep brand consistent */
+  --brand-ink: #fb923c;     /* orange-400 for hover on dark */
+  --accent: #f59e0b;        /* amber-500 */
+
+  --ring: 0 0 0 3px rgba(249, 115, 22, .45);
+}
+
+body{
+    font-family: "Jost", sans-serif;
+    background: var(--bg);
+}
+
+.button {
+    @apply text-center rounded-xl p-2 m-1.5;
+    background-color: var(--brand);
+    color: var(--panel);
+}
+
+.button:hover {
+    background-color: var(--brand-ink);
+    box-shadow: var(--ring);
+}
+
+.card {
+  @apply rounded-lg bg-white/40 border border-white/50 shadow-md backdrop-blur-md p-6
+}
