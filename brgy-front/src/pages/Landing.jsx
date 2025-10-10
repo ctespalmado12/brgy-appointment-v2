@@ -16,7 +16,7 @@ const Landing = () => {
               <Link className='button block w-full ' to="/register">Register</Link>
               <br />
               <Link className='button block w-full ' to="/schedule">Schedule</Link>
-              <Link className='button block w-full ' to="/admin-login">Admin Login</Link>
+              <Link className='button block w-full ' to="/admin">Admin Login</Link>
             </div>
         </div>
         
