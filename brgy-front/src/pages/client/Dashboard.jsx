@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../../assets/img/logo.png';
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-// import SchedModal from '/brgy-front/src/components/SchedModal/SchedModal'
+// import GetAppointmentModal from '/brgy-front/src/components/GetAppointmentModal/GetAppointmentModal'
 
 const Dashboard = () => {
 
@@ -58,12 +58,12 @@ const [open, setOpen] = useState(false);
                             />
                             </svg>
                         </div>
-                    <input
-                        type="text"
-                        id="table-search"
-                        className="block w-full sm:w-80 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for Schedule"
-                    />
+                        <input
+                            type="text"
+                            id="table-search"
+                            className="block w-full sm:w-80 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Search for Schedule"
+                        />
                     </div>
                 </div>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -162,7 +162,7 @@ const [open, setOpen] = useState(false);
 
 
       {open &&(
-        <SchedModal setOpen={setOpen}/>
+        <GetAppointmentModal setOpen={setOpen}/>
       )}
     </>
   )

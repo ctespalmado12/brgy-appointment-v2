@@ -49,3 +49,57 @@ body{
 .card {
   @apply rounded-lg bg-white/40 border border-white/50 shadow-md backdrop-blur-md p-6
 }
+
+/* TOP: Search LEFT, Dropdown RIGHT */
+.datatable-top {
+  display: grid !important;
+  grid-template-columns: 1fr auto;   /* left grows, right hugs content */
+  column-gap: 1rem;
+  align-items: center;
+}
+
+/* place items explicitly */
+.datatable-search{ 
+  grid-column: 1; 
+  justify-self: start; 
+}
+.datatable-dropdown{
+  grid-column: 2;
+  justify-self: end;
+}
+
+.datatable-search {          /* left */
+  order: 1;
+}
+
+.datatable-dropdown {        /* right */
+  order: 2;
+  margin-left: auto;         /* <-- push this one to the right */
+
+}
+
+/* BOTTOM: Info LEFT, Pagination RIGHT */
+.datatable-bottom {
+  display: flex;
+  align-items: center;
+}
+
+.datatable-info {            /* left */
+  order: 1;
+}
+
+.datatable-pagination {      /* right */
+  order: 2;
+  margin-left: auto;         /* <-- push to the right */
+}
+
+.dataTable-table thead th .dataTable-sorter {
+  display: none !important;
+}
+
+#bookappointment-table thead th .datatable-sorter::before,
+#bookappointment-table thead th .datatable-sorter::after,
+#myappointment-table thead th .datatable-sorter::before,
+#myappointment-table thead th .datatable-sorter::after {
+  content: none !important;
+}

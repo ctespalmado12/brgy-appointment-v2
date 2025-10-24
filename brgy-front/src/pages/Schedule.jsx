@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from "../assets/img/logo.png";
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import SchedModal from '../components/SchedModal/SchedModal'
+import GetAppointmentModal from '../components/clientModal/GetAppointmentModal'
 const Schedule = () => {
 
 const [open, setOpen] = useState(false);
@@ -164,7 +164,7 @@ const [open, setOpen] = useState(false);
 
 
       {open &&(
-        <SchedModal setOpen={setOpen}/>
+        <GetAppointmentModal setOpen={setOpen}/>
       )}
     </>
   )
