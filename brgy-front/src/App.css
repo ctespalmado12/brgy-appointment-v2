@@ -103,3 +103,7 @@ body{
 #myappointment-table thead th .datatable-sorter::after {
   content: none !important;
 }
+
+.datatable-pagination {
+  color: var(--text)
+}

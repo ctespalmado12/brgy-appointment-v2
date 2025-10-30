@@ -1,35 +1,75 @@
-import React, { useRef, useState } from 'react'
+import React, { use, useRef, useState } from 'react'
 import { useEffect } from 'react';
 import GetAppointmentModal from '../../components/clientModal/GetAppointmentModal';
+import MyAppointmentModal from '../../components/clientModal/MyAppointmentModal';
+
+
+const myAppointmentData = [
+  {
+    apptNo: "BRGY-2025-0001",
+    official: "Hon. Maria Santos",
+    dateISO: "2025-10-27",
+    dateLabel: "Oct 27, 2025",
+    time: "09:30 AM",
+    day: "Monday",
+    status: "Approved",
+    purpose: "Barangay Clearance",
+    comment: "comment kkkk"
+  },
+  {
+    apptNo: "BRGY-2025-0002",
+    official: "Hon. Roberto Cruz",
+    dateISO: "2025-10-29",
+    dateLabel: "Oct 29, 2025",
+    time: "02:00 PM",
+    day: "Wednesday",
+    status: "Pending",
+    purpose: "Residency Certificate",
+    comment: "comment xxxx"
+  },
+];
 
 const MyAppointment = () => {
     // const tableRef = useRef(null);
-    const [open, setOpen] = useState(false);
+    const [openMyAppointementModal, setMyAppointmentModalOpen] = useState(false);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
 
-  useEffect(() => {
-    // init Flowbite (from CDN), safe-guarded
+    useEffect(() => {
+    // init Flowbite (from CDN)
     window?.initFlowbite?.();
 
      // init simple-datatables (from CDN)
     const dataTable = new window.simpleDatatables.DataTable("#myappointment-table", {
-	searchable: true,
-	fixedHeight: true,
+        searchable: true,
+        fixedHeight: true,
     })
+    
+    const tbody = document.querySelector("#myappointment-table tbody")
+    
+    const handleRowClick = (e) => {
+        const tr = e.target.closest("tr");
+        if (!tr) return;
 
-    // event delegation: catch clicks inside the table
-    // const onClick = (e) => {
-    //     const getAppoinmentBtn = e.target.closest("[data-getappointmentmodal]");
-    //     if (getAppoinmentBtn) setOpen(true); //opens my modal
-    // };
+        const cells = tr.querySelectorAll("td");
+        const appointment = {
+            no: cells[0]?.textContent.trim(),
+            official: cells[1]?.textContent.trim(),
+            date: cells[2]?.textContent.trim(),
+            time: cells[3]?.textContent.trim(),
+            day: cells[4]?.textContent.trim(),
+            status: cells[5]?.textContent.trim(),
+            purpose: cells[6]?.textContent.trim(),
+            comment: cells[7]?.textContent.trim(),
+      };
 
-     // if the user clicks anyware in the document, onClick function will run
-    // document.addEventListener("click", onClick);
+            setSelectedAppointment(appointment);
+            setMyAppointmentModalOpen(true); // your modal opener
+            
+    };
 
-    // for cleanup. 
-    // return () => {
-    //     document.removeEventListener("click", onClick);
-    //     dataTable?.destroy();
-    // };
+    tbody?.addEventListener("click", handleRowClick);
+    
+
 
   }, []);
   return (
@@ -90,14 +130,6 @@ const MyAppointment = () => {
                             </th>
                             <th>
                                 <span className="flex items-center">
-                                    Available time
-                                    <svg className="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
-                                    </svg>
-                                </span>
-                            </th>
-                            <th>
-                                <span className="flex items-center">
                                     Status
                                     <svg className="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
@@ -115,228 +147,27 @@ const MyAppointment = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Flowbite</td>
-                            <td>2021/25/09</td>
-                            <td>269000</td>
-                            <td>49%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                       {myAppointmentData.map((data) =>
+                        <tr key={data.apptNo} className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">{data.apptNo}</td>
+                            <td>{data.official}</td>
+                            <td data-sort={data.dateISO}>{data.dateLabel}</td>
+                            <td>{data.time}</td>
+                            <td>{data.day}</td>
+                            <td>{data.status}</td>
+                            <td>{data.purpose}</td>
+                            <td hidden>{data.comment}</td>
                         </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">React</td>
-                            <td>2013/24/05</td>
-                            <td>4500000</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Angular</td>
-                            <td>2010/20/09</td>
-                            <td>2800000</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Vue</td>
-                            <td>2014/12/02</td>
-                            <td>3600000</td>
-                            <td>30%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Svelte</td>
-                            <td>2016/26/11</td>
-                            <td>1200000</td>
-                            <td>57%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Ember</td>
-                            <td>2011/08/12</td>
-                            <td>500000</td>
-                            <td>44%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Backbone</td>
-                            <td>2010/13/10</td>
-                            <td>300000</td>
-                            <td>9%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">jQuery</td>
-                            <td>2006/28/01</td>
-                            <td>6000000</td>
-                            <td>5%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Bootstrap</td>
-                            <td>2011/19/08</td>
-                            <td>1800000</td>
-                            <td>12%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Foundation</td>
-                            <td>2011/23/09</td>
-                            <td>700000</td>
-                            <td>8%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Bulma</td>
-                            <td>2016/24/10</td>
-                            <td>500000</td>
-                            <td>7%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Next.js</td>
-                            <td>2016/25/10</td>
-                            <td>2300000</td>
-                            <td>45%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Nuxt.js</td>
-                            <td>2016/16/10</td>
-                            <td>900000</td>
-                            <td>50%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Meteor</td>
-                            <td>2012/17/01</td>
-                            <td>1000000</td>
-                            <td>10%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Aurelia</td>
-                            <td>2015/08/07</td>
-                            <td>200000</td>
-                            <td>20%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Inferno</td>
-                            <td>2016/27/09</td>
-                            <td>100000</td>
-                            <td>35%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Preact</td>
-                            <td>2015/16/08</td>
-                            <td>600000</td>
-                            <td>28%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Lit</td>
-                            <td>2018/28/05</td>
-                            <td>400000</td>
-                            <td>60%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Alpine.js</td>
-                            <td>2019/02/11</td>
-                            <td>300000</td>
-                            <td>70%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Stimulus</td>
-                            <td>2018/06/03</td>
-                            <td>150000</td>
-                            <td>25%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-                            <td className="font-medium text-gray-900 whitespace-nowrap dark:text-white">Solid</td>
-                            <td>2021/05/07</td>
-                            <td>250000</td>
-                            <td>80%</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    )} 
                     </tbody>
                 </table>
-
-
-
             </div>
-            
-            
         </div>
 
-        {open &&(
-            <GetAppointmentModal onClose={() => setOpen(false)} />
+        {openMyAppointementModal &&(
+            <MyAppointmentModal 
+            appointment ={selectedAppointment}
+            onClose = {() => setMyAppointmentModalOpen(false)}/>
         )}
 
     </>
