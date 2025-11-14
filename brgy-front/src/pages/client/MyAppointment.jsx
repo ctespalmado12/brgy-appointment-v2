@@ -36,13 +36,13 @@ const MyAppointment = () => {
 
     useEffect(() => {
     // init Flowbite (from CDN)
-    window?.initFlowbite?.();
+    // window?.initFlowbite?.();
 
      // init simple-datatables (from CDN)
-    const dataTable = new window.simpleDatatables.DataTable("#myappointment-table", {
-        searchable: true,
-        fixedHeight: true,
-    })
+    // const dataTable = new window.simpleDatatables.DataTable("#myappointment-table", {
+    //     searchable: true,
+    //     fixedHeight: true,
+    // })
     
     const tbody = document.querySelector("#myappointment-table tbody")
     
