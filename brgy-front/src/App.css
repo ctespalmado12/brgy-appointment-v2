@@ -107,3 +107,8 @@ body{
 .datatable-pagination {
   color: var(--text)
 }
+
+/* .time-slots {
+  @apply inline-flex items-center justify-center w-full p-2 text-sm font-medium text-center border rounded-2xl cursor-pointer  hover:text-white ;
+  color: var(--text)
+} */

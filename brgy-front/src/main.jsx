@@ -1,5 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import 'flowbite';
+import 'flowbite/dist/flowbite.css';
 import "simple-datatables/dist/style.css";
 import './index.css'
 import App from './App.jsx'

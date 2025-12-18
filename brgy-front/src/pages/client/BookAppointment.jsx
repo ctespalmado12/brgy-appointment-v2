@@ -5,7 +5,7 @@ import GlobalDataTables from '../../components/globaldatatables';
 
 const BookAppointment = () => {
     const [open, setOpen] = useState(false);
-//     // const [bookSelectedAppointment, setBookSelectedAppointment] = useState[null];
+    const [bookSelectedAppointment, setBookSelectedAppointment] = useState(null);
 
     const appointmentList = [
     {
@@ -78,68 +78,36 @@ const BookAppointment = () => {
         day: "Wednesday",
         time: "8:30 AM – 10:00 AM"
     }
-];
+    ];
 
-const headers = [
-  "Brgy Official Schedule List", // official
-  "Position",                    // position
-  "Appointment Date",            // date
-  "Appointment Day",             // day
-  "Available time",              // time
-  "Action",                      // (button col)
-];
+    const headers = [
+    "Brgy Official Name",
+    "Position",
+    "Appointment Date",
+    "Appointment Day",
+    "Available time",
+    "Action",
+    ];
 
-//   useEffect(() => {
-//     // init Flowbite (from CDN), safe-guarded
-//     // window?.initFlowbite?.();
-
-//      // init simple-datatables (from CDN)
-//     const dataTable = new window.simpleDatatables.DataTable("#bookappointment-table", {
-// 	searchable: true,
-// 	fixedHeight: true,
-//     })
-
-//     // event delegation: catch clicks inside the table
-//     const onClick = (e) => {
-//         const getAppoinmentBtn = e.target.closest("[data-getappointmentmodal]");
-//         // const tr =e.target.closest("tr");
-//         // if(!tr) return;
-//         // const cells = tr.querySelectorAll("td");
-//         // const appointmentList = {
-//         //     official: cells[0]?.textContent.trim(),
-//         //     date: cells[1]?.textContent.trim(),
-//         //     time: cells[2]?.textContent.trim(),
-//         //     day: cells[3]?.textContent.trim(),
-//         //     status: cells[4]?.textContent.trim(),
-//         //     purpose: cells[5]?.textContent.trim(),
-//         // }
-
-//         if (getAppoinmentBtn)
-//             setOpen(true); //opens my modal
-//     };
-
-//      // if the user clicks button in the document, onClick function will run
-//     document.addEventListener("click", onClick);
-
-//     // for cleanup. 
-//     return () => {
-//         document.removeEventListener("click", onClick);
-//         dataTable?.destroy();
-//     };
-
-//   }, []);
+    const columns = ["official", "position", "date", "day", "time"];
   return (
     <>
         <GlobalDataTables
             tableName="bookappointment-table"
             header = {headers}
             rows = {appointmentList}
-            
+            columns = {columns}
+            onGetAppointment={() => setOpen(true)}
+            onRowSelect={(row) => {
+                setBookSelectedAppointment(row);
+                setOpen(true);
+            }}
         />
         
-
         {open &&(
-            <GetAppointmentModal onClose={() => setOpen(false)} />
+            <GetAppointmentModal 
+                appointment = {bookSelectedAppointment}
+                onClose={() => setOpen(false)} />
         )}
 
     </>
